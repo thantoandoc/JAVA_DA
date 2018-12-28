@@ -4,6 +4,14 @@ public class LinkedList {
 	
 	private BookNode head;
 	
+	public LinkedList() {
+		head = null;
+	}
+	public LinkedList(BookNode h) {
+		head = h;
+	}
+	
+	
 	/*
 	 * add Book into First of LinkedList
 	 * book : object to add
@@ -170,16 +178,93 @@ public class LinkedList {
 	}
 //5d. Xây dựng các chức năng
 	//5d1.Sắp xếp Theo vần alphabet của tên sách
-	public void sortByName(){
-		
+	
+	public LinkedList sortByName(){
+		BookNode p = head;
+		BookNode q = null;
+		for(; p.next != null; p = p.next) {
+			for(q = p.next; q != null; q = q.next) {
+				if(p.data.getName().compareToIgnoreCase(q.data.getName()) > 0 
+			|| p.data.getName().compareToIgnoreCase(q.data.getName()) == 0 && p.data.getId() > q.data.getId() ) {
+					Book temp = p.data;
+					p.data = q.data;
+					q.data = temp;	
+				}
+			}
+		}
+		return new LinkedList(head);
+	}
+	//5d2. Sắp xếp theo tên tác giả
+	public LinkedList sortByAuthor(){
+		BookNode p = head;
+		BookNode q = null;
+		for(; p.next != null; p = p.next) {
+			for(q = p.next; q != null; q = q.next) {
+				if(p.data.getAuthor().compareToIgnoreCase(q.data.getAuthor()) > 0 
+			|| p.data.getAuthor().compareToIgnoreCase(q.data.getAuthor()) == 0 && p.data.getId() > q.data.getId() ) {
+					Book temp = p.data;
+					p.data = q.data;
+					q.data = temp;	
+				}
+			}
+		}
+		return new LinkedList(head);
 	}
 	
+	//5d3. Sắp xếp theo tên nhà xuất bản
+		public LinkedList sortByReleaseCompany(){
+			BookNode p = head;
+			BookNode q = null;
+			for(; p.next != null; p = p.next) {
+				for(q = p.next; q != null; q = q.next) {
+					if(p.data.getReleaseCompany().compareToIgnoreCase(q.data.getReleaseCompany()) > 0 
+				|| p.data.getReleaseCompany().compareToIgnoreCase(q.data.getReleaseCompany()) == 0 && p.data.getId() > q.data.getId() ) {
+						Book temp = p.data;
+						p.data = q.data;
+						q.data = temp;	
+					}
+				}
+			}
+			return new LinkedList(head);
+		}
+		//5d4. Sắp xếp theo tên năm xuất bản
+		public LinkedList sortByReleaseYear(){
+			BookNode p = head;
+			BookNode q = null;
+			for(; p.next != null; p = p.next) {
+				for(q = p.next; q != null; q = q.next) {
+					if(p.data.getReleaseYear() > q.data.getReleaseYear() 
+				|| p.data.getReleaseYear() == q.data.getReleaseYear() && p.data.getId() > q.data.getId() ) {
+						Book temp = p.data;
+						p.data = q.data;
+						q.data = temp;	
+					}
+				}
+			}
+			return new LinkedList(head);
+		}
+		//5d5. Sắp xếp theo tên năm xuất bản
+		public LinkedList sort(){
+			BookNode p = head;
+			BookNode q = null;
+			for(; p.next != null; p = p.next) {
+				for(q = p.next; q != null; q = q.next) {
+					if(p.data.getId() > q.data.getId()) {
+						Book temp = p.data;
+						p.data = q.data;
+						q.data = temp;	
+					}
+				}
+			}
+			return new LinkedList(head);
+		}
+
 	/*
 	 * Nested Class
 	 */
 	class BookNode {
-		Book data;
-		BookNode next;
+		private Book data;
+		private BookNode next;
 		public BookNode() {
 		}
 		public BookNode(Book data) {
@@ -187,6 +272,6 @@ public class LinkedList {
 			this.data = data;
 			this.next = null;
 		}
-	
+		
 	}
 }
