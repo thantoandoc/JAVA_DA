@@ -1,3 +1,11 @@
 eclipse.preferences.version=1
+encoding//src/controller/IndexDAO.java=UTF-8
 encoding//src/controller/Source.java=UTF-8
+encoding//src/model/IConstants.java=UTF-8
 encoding//src/model/LinkedList.java=UTF-8
+encoding//src/ui/GDBook.java=UTF-8
+encoding//src/ui/GDBorrowBook.java=UTF-8
+encoding//src/ui/GDDeleteBook.java=UTF-8
+encoding//src/ui/GDReturn.java=UTF-8
+encoding//src/ui/GDUpdate.java=UTF-8
+encoding//src/ui/GiaoDien.java=UTF-8

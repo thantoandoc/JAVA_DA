@@ -54,6 +54,6 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return id + " " + name + " " + author + " " + releaseCompany + " " + releaseYear;
+		return id + ";" + name + ";" + author + ";" + releaseCompany + ";" + releaseYear+";" +status+"\r\n";
 	}
 }

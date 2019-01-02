@@ -28,6 +28,29 @@ public class LinkedList {
 		}
 		return count;
 	}
+	public Book get(int idx) {
+		if(idx < 0 || idx >= getLength()) {
+			return null;
+		}
+		BookNode temp = head;
+		int count = 0;
+		while(count != idx) {
+			temp = temp.next;
+			count++;
+		}
+		return temp.data;
+	}
+	public Book getBookByID(int idx) {
+		if(idx < 0 || idx >= getLength()) {
+			return null;
+		}
+		BookNode temp = head;
+		while(temp != null) {
+			if(temp.data.getId() == idx) break;
+			temp = temp.next;
+		}
+		return temp.data;
+	}
 	public void insertFirst(Book book) {
 		if(head == null) {
 			head = new BookNode(book);
@@ -44,10 +67,23 @@ public class LinkedList {
 	 * 
 	 */
 	public void insertAfter(Book book, int pos) {
+		if(pos < 1 || pos > getLength() + 1) {
+			return;
+		}
 		if(head == null) {
 			head = new BookNode(book);
 			return;
 		}
+		BookNode temp = head, prev = null;
+		BookNode node = new BookNode(book);
+		while(pos != 0) {
+			pos = pos - 1;
+			prev = temp;
+			temp = temp.next;
+		}
+		
+		node.next = temp;
+		prev.next = node;
 		
 	}
 	/*
@@ -82,6 +118,90 @@ public class LinkedList {
 		if( head == null) return;
 		head = head.next;
 	}
+	public void deleteByID(int id) {
+		if(id < 0 || head == null) {
+			return;
+		}
+		
+		BookNode temp = head, prev = null;
+		if (temp != null && temp.data.getId() == id) 
+        { 
+            head = temp.next; // Changed head 
+            return; 
+        } 
+		
+		while(temp != null && temp.data.getId() != id) {
+			prev = temp; 
+            temp = temp.next;
+		}
+		if (temp == null) return; 
+		prev.next = temp.next;
+	}
+	public void deleteAfterID(int id) {
+		
+		if(id < 0 || head == null) {
+			return;
+		}
+		
+		BookNode temp = head, prev = null;
+		if (temp != null && temp.data.getId() == id) 
+        { 
+            head.next = temp.next.next; // Changed head 
+            return; 
+        } 
+		
+		while(temp != null && temp.data.getId() != id) {
+			prev = temp; 
+            temp = temp.next;
+		}
+		if (temp == null) return; 
+		prev = temp; 
+        temp = temp.next;
+		prev.next = temp.next;
+	}
+	public void deleteByName(String s) {
+		if( head == null) {
+			return;
+		}
+		
+		BookNode temp = head, prev = null;
+		if (temp != null && temp.data.getName().equals(s)) 
+        { 
+            head = temp.next; // Changed head 
+            return; 
+        } 
+		
+		while(temp != null && !temp.data.getName().equals(s)) {
+			prev = temp; 
+            temp = temp.next;
+		}
+		if (temp == null) return; 
+		prev.next = temp.next;
+	}
+	public void deleteByAuthor(String s) {
+		if( head == null) {
+			return;
+		}
+		
+		BookNode temp = head, prev = null;
+		while(head != null && head.data.getAuthor().equals(s)) {
+			head = head.next;
+		}
+		while(temp.next != null) {
+			if(temp.data.getAuthor().equals(s)) {
+				
+				if(prev != null && temp != null) {
+					 prev.next = temp.next;
+				}
+				temp = temp.next;
+				
+			} else {
+				prev = temp;
+				temp = temp.next;
+			}
+      	}
+	}
+	
 	public void deleteLast(){
 		 if( head == null ) return;
 		 BookNode last = head, prev = null;
@@ -102,11 +222,12 @@ public class LinkedList {
 		LinkedList list = new LinkedList();
 		BookNode temp = head;
 		while (temp != null) {
-			if(temp.data.getName().equals(name)){
+			if(temp.data.getName().contains(name)){
 				list.insertLast(temp.data);
 			}
 			temp = temp.next;
 		}
+
 		return list;
 	}
 // 4b.Search By Author
@@ -114,7 +235,7 @@ public class LinkedList {
 		LinkedList list = new LinkedList();
 		BookNode temp = head;
 		while (temp != null) {
-			if(temp.data.getAuthor().equals(author)){
+			if(temp.data.getAuthor().contains(author)){
 				list.insertLast(temp.data);
 			}
 			temp = temp.next;
@@ -126,7 +247,7 @@ public class LinkedList {
 		LinkedList list = new LinkedList();
 		BookNode temp = head;
 		while (temp != null) {
-			if(temp.data.getReleaseCompany().equals(company)){
+			if(temp.data.getReleaseCompany().contains(company)){
 				list.insertLast(temp.data);
 			}
 			temp = temp.next;
@@ -266,6 +387,10 @@ public class LinkedList {
 		private Book data;
 		private BookNode next;
 		public BookNode() {
+		}
+		public BookNode(BookNode node) {
+			this.data = node.data;
+			this.next = node.next;
 		}
 		public BookNode(Book data) {
 			super();
